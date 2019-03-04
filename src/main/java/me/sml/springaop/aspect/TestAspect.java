@@ -2,6 +2,7 @@ package me.sml.springaop.aspect;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +21,14 @@ public class TestAspect {
         log.info("============= onAfterHandler ===============");
     }
 
-    /**
-     * @author SML
-     * @Before @After를 혼합한 것과 동일
-     * */
-//    @Around("execution(* me.sml.springaop.service.*.*AOP(..))")
-//    public void onAroundHandler(JoinPoint joinPoint){
-//        log.info("============= onAroundHandler ===============");
-//    }
+    @Around("execution(* me.sml.springaop.service.*.*AOP(..))")
+    public Object onAroundHandler(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
+        log.info("============= onAroundHandler ===============");
+        log.info("============= aroundAdvice() : before ===============");
+        Object result = proceedingJoinPoint.proceed();
+        log.info("============= aroundAdvice() : after ===============");
+        return result;
+    }
 
     @AfterReturning(pointcut = "execution(* me.sml.springaop.service.*.*AOP(..))",
                     returning = "str")
@@ -36,9 +37,11 @@ public class TestAspect {
         log.info("@AfterReturning : {}", str);
     }
 
-    @Pointcut("execution(* me.sml.springaop.service.*.*AOP(..))")
-    public void onPointCut(JoinPoint joinPoint){
-        log.info("============= onPointCut ===============");
+    @AfterThrowing(pointcut = "execution(* me.sml.springaop.service.*.*AOP(..))",
+            throwing = "ex")
+    public void onAfterThrowingHandler(Throwable ex){
+        log.info("============= onAfterThrowingHandler ===============");
     }
+
 
 }
