@@ -22,11 +22,11 @@
     
 2. JoinPoint
     
-    언제(when) 횡단 관심 모듈을 삽입 할 지 정의한다. Before, After, AfterReturning, AfterThrowing, Around 등이 존재한다.
+    Advice를 적용 가능한 지점을 의미. 메서드 호출, 필드 값 변경등이 Joinpoint에 해당
     
 3. Advice
 
-    횡단 관심 모듈 그 자체(what)를 의미한다. 
+    언제(when) 횡단 관심 모듈을 삽입 할 지 정의한다. Before, After, AfterReturning, AfterThrowing, Around 등이 존재한다.
     
 ### 사용법
 
